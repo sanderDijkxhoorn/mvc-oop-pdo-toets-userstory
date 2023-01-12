@@ -30,16 +30,23 @@ class Mankementen extends Controller
             'InstructeurNaam' => $mankementen[0]->Naam,
             'InstructeurEmail' => $mankementen[0]->Email,
             'kenteken' => $mankementen[0]->Kenteken,
-            'AutoId' => $mankementen[0]->Id
+            'AutoId' => $mankementen[0]->Id,
+            'Type' => $mankementen[0]->Type
         ];
         $this->view('mankementen/index', $data);
     }
 
     public function new($id)
     {
+        $mankementen = $this->mankementModel->getMankementen();
+
         $data = [
-            'title' => 'mankement toevoegen',
-            'AutoId' => $id
+            'title' => 'mankementen toevoegen',
+            'InstructeurNaam' => $mankementen[0]->Naam,
+            'InstructeurEmail' => $mankementen[0]->Email,
+            'kenteken' => $mankementen[0]->Kenteken,
+            'AutoId' => $mankementen[0]->Id,
+            'Type' => $mankementen[0]->Type
         ];
         $this->view('mankementen/new', $data);
     }
