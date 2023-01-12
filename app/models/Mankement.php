@@ -15,8 +15,19 @@ class Mankement
 
         $this->db->bind(':Id', 1, PDO::PARAM_INT);
 
-        $result = $this->db->resultSet();
+        return $this->db->resultSet();
+    }
 
-        return $result;
+    public function addMankement($post)
+    {
+        $sql = "INSERT INTO Mankement(AutoId, Mankement, Datum) VALUES (:AutoId, :Mankement, :Datum)";
+
+        $this->db->query($sql);
+
+        $this->db->bind(':AutoId', $post['AutoId'], PDO::PARAM_INT);
+        $this->db->bind(':Mankement', $post['Mankement'], PDO::PARAM_STR);
+        $this->db->bind(':Datum', date("Y-m-d"), PDO::PARAM_STR);
+
+        return $this->db->execute();
     }
 }

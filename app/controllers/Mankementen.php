@@ -57,32 +57,45 @@ class Mankementen extends Controller
         } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
             try {
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $_POST['AutoId'] = $id;
 
-                
+                $worked = $this->mankementModel->addMankement($_POST);
 
-                $mankementen = $this->mankementModel->getMankementen();
+                if ($worked) {
+                    $mankementen = $this->mankementModel->getMankementen();
 
-                // Maak de inhoud voor de tbody in de view
-                $rows = '';
-                foreach ($mankementen as $mankement) {
+                    // Maak de inhoud voor de tbody in de view
+                    $rows = '';
+                    foreach ($mankementen as $mankement) {
 
-                    $rows .= "<tr>
+                        $rows .= "<tr>
                           <td>$mankement->Datum</td>
                           <td>$mankement->Mankement</td>
                         </tr>";
+                    }
+
+                    $data = [
+                        'title' => 'mankementen overzicht',
+                        'mankementen' => $rows,
+                        'InstructeurNaam' => $mankementen[0]->Naam,
+                        'InstructeurEmail' => $mankementen[0]->Email,
+                        'kenteken' => $mankementen[0]->Kenteken,
+                        'AutoId' => $mankementen[0]->Id,
+                        'Type' => $mankementen[0]->Type,
+                        'Success' => 'Mankement toegevoegd'
+                    ];
+                } else {
+                    $data = [
+                        'title' => 'mankementen overzicht',
+                        'mankementen' => $rows,
+                        'InstructeurNaam' => $mankementen[0]->Naam,
+                        'InstructeurEmail' => $mankementen[0]->Email,
+                        'kenteken' => $mankementen[0]->Kenteken,
+                        'AutoId' => $mankementen[0]->Id,
+                        'Type' => $mankementen[0]->Type,
+                        'Error' => 'Mankement toevoegen fout gegaan'
+                    ];
                 }
-
-                $data = [
-                    'title' => 'mankementen overzicht',
-                    'mankementen' => $rows,
-                    'InstructeurNaam' => $mankementen[0]->Naam,
-                    'InstructeurEmail' => $mankementen[0]->Email,
-                    'kenteken' => $mankementen[0]->Kenteken,
-                    'AutoId' => $mankementen[0]->Id,
-                    'Type' => $mankementen[0]->Type,
-                    'Success' => 'Mankement toegevoegd'
-                ];
-
                 $this->view('mankementen/index', $data);
             } catch (PDOException $e) {
                 echo 'Er is iets misgegaan tijdens het toevoegen van een mankement';
