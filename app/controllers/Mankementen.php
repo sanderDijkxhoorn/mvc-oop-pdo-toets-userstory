@@ -42,7 +42,6 @@ class Mankementen extends Controller
         // Check if GET or POST
 
         if ($_SERVER['REQUEST_METHOD'] == "GET") {
-
             $mankementen = $this->mankementModel->getMankementen();
 
             $data = [
@@ -56,9 +55,10 @@ class Mankementen extends Controller
 
             $this->view('mankementen/new', $data);
         } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
             try {
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                
 
                 $mankementen = $this->mankementModel->getMankementen();
 

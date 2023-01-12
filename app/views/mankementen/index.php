@@ -1,20 +1,23 @@
 <h1><?= $data["title"]; ?></h1>
 
+<h2>Naam instructeur: <?= $data['InstructeurNaam'] ?></h2>
+<h2>Email instructeur: <?= $data['InstructeurEmail'] ?></h2>
 <h2>Kenteken: <?= $data['kenteken'] ?>-<?= $data['Type'] ?></h2>
 
-<div class="form-group">
-    <label for="Mankement">Mankement</label>
-    <input type="text" name="Mankement" class="form-control form-control-lg" value="<?= $data['Mankement']; ?>">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Datum</th>
+            <th scope="col">Mankement</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?= $data['mankementen'] ?>
+    </tbody>
+</table>
 
-    <span class="invalid-feedback"><?= $data['Mankement_err']; ?></span>
-</div>
+<a href="<?= URLROOT; ?>/mankementen/new/<?= $data['AutoId'] ?>">Mankement toevoegen</a>
 
-<div class="row">
-    <div class="col">
-        <a href="<?= URLROOT; ?>/mankementen/add/<?= $data['AutoId'] ?>">
-            <input type="submit" value="Toevoegen" class="btn btn-success btn-block">
-        </a>
-    </div>
-</div>
+<br>
 
 <a href="<?= URLROOT; ?>/homepages/index">Terug</a>
