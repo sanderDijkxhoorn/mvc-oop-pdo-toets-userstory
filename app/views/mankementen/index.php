@@ -4,6 +4,7 @@
 <h2>Email instructeur: <?= $data['InstructeurEmail'] ?></h2>
 <h2>Kenteken: <?= $data['kenteken'] ?></h2>
 
+<a href="<?= URLROOT; ?>/mankementen/new/<?= $data['AutoId'] ?>">Mankement toevoegen</a>
 
 <table class="table">
   <thead>
@@ -14,4 +15,5 @@
     <?= $data['mankementen'] ?>
   </tbody>
 </table>
+
 <a href="<?= URLROOT; ?>/homepages/index">Terug</a>

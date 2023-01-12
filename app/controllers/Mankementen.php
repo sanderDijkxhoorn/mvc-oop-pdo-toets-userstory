@@ -29,8 +29,18 @@ class Mankementen extends Controller
             'mankementen' => $rows,
             'InstructeurNaam' => $mankementen[0]->Naam,
             'InstructeurEmail' => $mankementen[0]->Email,
-            'kenteken' => $mankementen[0]->Kenteken
+            'kenteken' => $mankementen[0]->Kenteken,
+            'AutoId' => $mankementen[0]->Id
         ];
         $this->view('mankementen/index', $data);
+    }
+
+    public function new($id)
+    {
+        $data = [
+            'title' => 'mankement toevoegen',
+            'AutoId' => $id
+        ];
+        $this->view('mankementen/new', $data);
     }
 }
