@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 01, 2022 at 10:03 AM
--- Server version: 5.7.34
--- PHP Version: 8.0.8
+-- Generation Time: Jan 12, 2023 at 11:45 AM
+-- Server version: 5.7.39
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `Mvc-2109a`
 --
+CREATE DATABASE IF NOT EXISTS `Mvc-2109a` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `Mvc-2109a`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Auto`
+--
+
+CREATE TABLE `Auto` (
+  `Id` int(11) NOT NULL,
+  `Kenteken` varchar(8) NOT NULL,
+  `Type` varchar(30) NOT NULL,
+  `InstructeurId` tinyint(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Auto`
+--
+
+INSERT INTO `Auto` (`Id`, `Kenteken`, `Type`, `InstructeurId`) VALUES
+(1, 'AU-67-IO', 'Golf', 1),
+(2, 'TH-78-KL', 'Ferrari', 2),
+(3, '90-KL-TR', 'Fiat 500', 3),
+(4, 'YY-OP-78', 'Mercedes', 1),
+(5, 'ST-FZ-28', 'Citroen', 2);
 
 -- --------------------------------------------------------
 
@@ -118,6 +144,32 @@ INSERT INTO `Les` (`Id`, `DatumTijd`, `LeerlingId`, `InstructeurId`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Mankement`
+--
+
+CREATE TABLE `Mankement` (
+  `Id` int(11) NOT NULL,
+  `AutoId` int(11) NOT NULL,
+  `Datum` date NOT NULL,
+  `Mankement` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Mankement`
+--
+
+INSERT INTO `Mankement` (`Id`, `AutoId`, `Datum`, `Mankement`) VALUES
+(1, 4, '1899-10-04', 'Profiel rechterband minder dan 2mm'),
+(2, 2, '1899-10-16', 'Rechter achterlicht kapot'),
+(3, 1, '1900-12-20', 'Spiegel links afgebroken'),
+(4, 2, '1891-10-16', 'Bumper rechtsachter ingedeukt'),
+(5, 2, '2022-12-16', 'Radio kapot'),
+(25, 1, '2023-01-12', 'Test'),
+(26, 1, '2023-01-12', 'hoi');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Onderwerp`
 --
 
@@ -171,6 +223,12 @@ INSERT INTO `Opmerking` (`Id`, `LesId`, `Opmerking`) VALUES
 --
 
 --
+-- Indexes for table `Auto`
+--
+ALTER TABLE `Auto`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `country`
 --
 ALTER TABLE `country`
@@ -197,6 +255,13 @@ ALTER TABLE `Les`
   ADD KEY `FK_Les_InstructeurId_Instructeur_Id` (`InstructeurId`);
 
 --
+-- Indexes for table `Mankement`
+--
+ALTER TABLE `Mankement`
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `autoFK` (`AutoId`);
+
+--
 -- Indexes for table `Onderwerp`
 --
 ALTER TABLE `Onderwerp`
@@ -213,6 +278,12 @@ ALTER TABLE `Opmerking`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `Auto`
+--
+ALTER TABLE `Auto`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `country`
@@ -239,6 +310,12 @@ ALTER TABLE `Les`
   MODIFY `Id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
+-- AUTO_INCREMENT for table `Mankement`
+--
+ALTER TABLE `Mankement`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT for table `Onderwerp`
 --
 ALTER TABLE `Onderwerp`
@@ -260,6 +337,12 @@ ALTER TABLE `Opmerking`
 ALTER TABLE `Les`
   ADD CONSTRAINT `FK_Les_InstructeurId_Instructeur_Id` FOREIGN KEY (`InstructeurId`) REFERENCES `Instructeur` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_Les_LeerlingId_Leerling_Id` FOREIGN KEY (`LeerlingId`) REFERENCES `Leerling` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `Mankement`
+--
+ALTER TABLE `Mankement`
+  ADD CONSTRAINT `autoFK` FOREIGN KEY (`AutoId`) REFERENCES `Auto` (`Id`);
 
 --
 -- Constraints for table `Onderwerp`
