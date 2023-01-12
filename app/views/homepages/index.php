@@ -7,4 +7,7 @@
     <li>
         <a href="<?= URLROOT; ?>/lessen/index">Lesrooster weergeven</a>
     </li>
+    <li>
+        <a href="<?= URLROOT; ?>/mankementen/index">Mankenmenten overzicht</a>
+    </li>
 </ul>
