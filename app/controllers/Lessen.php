@@ -12,7 +12,7 @@ class Lessen extends Controller
     $lessen = $this->lesModel->getLessen();
 
     // Vardumpie
-    var_dump($lessen);
+    // var_dump($lessen);
 
     // Maak de inhoud voor de tbody in de view
     $rows = '';

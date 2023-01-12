@@ -1,3 +1,25 @@
+<!-- <?= var_dump($data) ?> -->
+
+<!-- If success is set then show success message -->
+<?php if (isset($data['Success'])) {
+?>
+    <div class="alert alert-success">
+        <?= $data['Success'] ?>
+    </div>
+<?php
+}
+?>
+
+<!-- If success is set then show success message -->
+<?php if (isset($data['Error'])) {
+?>
+    <div class="alert alert-danger">
+        <?= $data['Error'] ?>
+    </div>
+<?php
+}
+?>
+
 <h1><?= $data["title"]; ?></h1>
 
 <h2>Naam instructeur: <?= $data['InstructeurNaam'] ?></h2>

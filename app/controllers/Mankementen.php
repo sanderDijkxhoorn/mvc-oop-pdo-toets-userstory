@@ -57,46 +57,73 @@ class Mankementen extends Controller
         } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
             try {
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $_POST['AutoId'] = $id;
+                $mankementen = $this->mankementModel->getMankementen();
 
-                $worked = $this->mankementModel->addMankement($_POST);
+                // Check post Mankement is more then 50 characters then show error ti is longer and if it is empty show empty error
+                if (strlen($_POST['Mankement']) > 50) {
+                    $data = [
+                        'title' => 'mankementen toevoegen',
+                        'InstructeurNaam' => $mankementen[0]->Naam,
+                        'InstructeurEmail' => $mankementen[0]->Email,
+                        'kenteken' => $mankementen[0]->Kenteken,
+                        'AutoId' => $mankementen[0]->Id,
+                        'Type' => $mankementen[0]->Type,
+                        'Error' => 'Het mankement mag niet langer zijn dan 50 karakters'
+                    ];
+                    $this->view('mankementen/index', $data);
+                } else if (empty($_POST['Mankement'])) {
+                    $data = [
+                        'title' => 'mankementen toevoegen',
+                        'InstructeurNaam' => $mankementen[0]->Naam,
+                        'InstructeurEmail' => $mankementen[0]->Email,
+                        'kenteken' => $mankementen[0]->Kenteken,
+                        'AutoId' => $mankementen[0]->Id,
+                        'Type' => $mankementen[0]->Type,
+                        'Error' => 'Het mankement mag niet leeg zijn'
+                    ];
+                    $this->view('mankementen/index', $data);
+                } else {
+                    $_POST['AutoId'] = $id;
 
-                if ($worked) {
-                    $mankementen = $this->mankementModel->getMankementen();
+                    $worked = $this->mankementModel->addMankement($_POST);
 
-                    // Maak de inhoud voor de tbody in de view
-                    $rows = '';
-                    foreach ($mankementen as $mankement) {
+                    if ($worked) {
+                        $mankementen = $this->mankementModel->getMankementen();
 
-                        $rows .= "<tr>
+                        // Maak de inhoud voor de tbody in de view
+                        $rows = '';
+                        foreach ($mankementen as $mankement) {
+
+                            $rows .= "<tr>
                           <td>$mankement->Datum</td>
                           <td>$mankement->Mankement</td>
                         </tr>";
-                    }
+                        }
 
-                    $data = [
-                        'title' => 'mankementen overzicht',
-                        'mankementen' => $rows,
-                        'InstructeurNaam' => $mankementen[0]->Naam,
-                        'InstructeurEmail' => $mankementen[0]->Email,
-                        'kenteken' => $mankementen[0]->Kenteken,
-                        'AutoId' => $mankementen[0]->Id,
-                        'Type' => $mankementen[0]->Type,
-                        'Success' => 'Mankement toegevoegd'
-                    ];
-                } else {
-                    $data = [
-                        'title' => 'mankementen overzicht',
-                        'mankementen' => $rows,
-                        'InstructeurNaam' => $mankementen[0]->Naam,
-                        'InstructeurEmail' => $mankementen[0]->Email,
-                        'kenteken' => $mankementen[0]->Kenteken,
-                        'AutoId' => $mankementen[0]->Id,
-                        'Type' => $mankementen[0]->Type,
-                        'Error' => 'Mankement toevoegen fout gegaan'
-                    ];
+                        $data = [
+                            'title' => 'mankementen overzicht',
+                            'mankementen' => $rows,
+                            'InstructeurNaam' => $mankementen[0]->Naam,
+                            'InstructeurEmail' => $mankementen[0]->Email,
+                            'kenteken' => $mankementen[0]->Kenteken,
+                            'AutoId' => $mankementen[0]->Id,
+                            'Type' => $mankementen[0]->Type,
+                            'Success' => 'Mankement toegevoegd'
+                        ];
+                    } else {
+                        $data = [
+                            'title' => 'mankementen overzicht',
+                            'mankementen' => $rows,
+                            'InstructeurNaam' => $mankementen[0]->Naam,
+                            'InstructeurEmail' => $mankementen[0]->Email,
+                            'kenteken' => $mankementen[0]->Kenteken,
+                            'AutoId' => $mankementen[0]->Id,
+                            'Type' => $mankementen[0]->Type,
+                            'Error' => 'Mankement toevoegen fout gegaan'
+                        ];
+                    }
+                    $this->view('mankementen/index', $data);
                 }
-                $this->view('mankementen/index', $data);
             } catch (PDOException $e) {
                 echo 'Er is iets misgegaan tijdens het toevoegen van een mankement';
                 header('Refresh: 2; url=' . URLROOT . '/mankementen/index');

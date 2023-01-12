@@ -1,13 +1,3 @@
-<!-- If success is set then show success message -->
-<?php if (isset($data['success'])) {
-?>
-    <div class="alert alert-success">
-        <?= $data['success'] ?>
-    </div>
-<?php
-}
-?>
-
 <h1><?= $data["title"]; ?></h1>
 
 <h2>Kenteken: <?= $data['kenteken'] ?>-<?= $data['Type'] ?></h2>
