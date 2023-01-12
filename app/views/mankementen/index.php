@@ -11,12 +11,11 @@
     <th>AutoId</th>
     <th>Datum</th>
     <th>Mankement</th>
-    <th>Onderwerp</th>
     <th>Update</th>
     <th>Delete</th>
   </thead>
   <tbody>
-    <?= $data['lessen'] ?>
+    <?= $data['mankementen'] ?>
   </tbody>
 </table>
 <a href="<?= URLROOT; ?>/homepages/index">Terug</a>

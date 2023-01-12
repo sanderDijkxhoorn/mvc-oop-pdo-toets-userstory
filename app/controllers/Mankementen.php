@@ -17,16 +17,12 @@ class Mankementen extends Controller
     // Maak de inhoud voor de tbody in de view
     $rows = '';
     foreach ($mankementen as $mankement) {
-      $dateTimeObj = new DateTimeImmutable($mankement->DatumTijd, new DateTimeZone('Europe/Amsterdam'));
-      $date = $dateTimeObj->format('d-m-Y');
-      $time = $dateTimeObj->format('H:i');
 
       $rows .= "<tr>
-                  <td>$date</td>
-                  <td>$time</td>
-                  <td>$mankement->LENA</td>
-                  <td>$mankement->mankementinfo</td>
-                  <td>$mankement->Onderwerp</td>
+                  <td>$mankement->Id</td>
+                  <td>$mankement->AutoId</td>
+                  <td>$mankement->Datum</td>
+                  <td>$mankement->Mankement</td>
                   <td>
                     <a href='" . URLROOT . "/mankementen/update/$mankement->mankementId' class='btn btn-primary'>
                       <img src='" . URLROOT . "/img/b_sbrowse.png' alt='table picture' style='width:20px; height:20px;'>
