@@ -87,19 +87,18 @@ class Mankementen extends Controller
 
                     $worked = $this->mankementModel->addMankement($_POST);
 
+                    $mankementen = $this->mankementModel->getMankementen();
+
+                    // Maak de inhoud voor de tbody in de view
+                    $rows = '';
+                    foreach ($mankementen as $mankement) {
+                        $rows .= "<tr>
+                      <td>$mankement->Datum</td>
+                      <td>$mankement->Mankement</td>
+                    </tr>";
+                    }
+
                     if ($worked) {
-                        $mankementen = $this->mankementModel->getMankementen();
-
-                        // Maak de inhoud voor de tbody in de view
-                        $rows = '';
-                        foreach ($mankementen as $mankement) {
-
-                            $rows .= "<tr>
-                          <td>$mankement->Datum</td>
-                          <td>$mankement->Mankement</td>
-                        </tr>";
-                        }
-
                         $data = [
                             'title' => 'mankementen overzicht',
                             'mankementen' => $rows,
